@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Implementación de una lista</title>
+  <meta charset="utf-8"/>  
+</head>
+<body>
+  <h1>Implementación de una lista</h1>
+  Introduce un número:  
+  <input type="text" id="num" value="" placeholder="Entero" onfocus="cleanData ()" /><br>
+  Introduce una posición: 
+  <input type="text" id="pos" value="" placeholder="Entero" onfocus="this.value=''" /><br>
+  <pre style="color: darkolivegreen">
+    En caso de no introducir posición se operará
+     con la última de la lista. 
+     Primera posición de una lista: 0</pre>
+  
+  <button id="addButton" onclick="addNumber (document.getElementById ('num').value);">Añade número</button>
+  
+  <button id="pollButton" onclick="removeNumber ();">Borrar número</button>
+
+  <br/><br/>
+
+  <p id="error" style="color:red"></p> 
+  <div id="queue">
+  </div>
+  <script src="queue.js"></script>
+</body>
+</html>
