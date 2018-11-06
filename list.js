@@ -228,8 +228,52 @@ function set(list, elem, index) {
     if (!isNaN(elem)) {
         var elemAnt = list[index];
         list[index] = elem;
-    }else {
+    } else {
         throw "The element os not a number";
     }
     return elemAnt;
 }
+
+function testlist() {
+    //var list = create (); 	
+    var list = [];
+    console.log("Capacidad: " + capacity(list));
+    console.log("Es vacía: " + isEmpty(list));
+    console.log("Longitud: " + size(list));
+
+    try {
+
+
+        for (var i = 0; i < MAX_ELEM_LIST - 1; i++) {
+            console.log("Nº de elementos: " + add(list, i * 10));
+        }
+        console.log("The full list: " + toString(list));
+        console.log("Añado en index 2 valor 55: " + addAt(list, 55, 2));
+        add(list, i); //It will generate an exception.
+    } catch (err) {
+        console.log(err);
+    }
+
+    console.log("Busco el valor 55 desde el principio: " + indexOf(list, 55));
+    console.log("Busco el valor 55 desde el final: " + lastIndexOf(list, 55));
+    console.log("The full list: " + toString(list));
+    console.log("The first element list: " + firstElement(list));
+    console.log("The last element list: " + lastElement(list));
+    console.log("The element at index 3: " + get(list, 3));
+
+    //clear(list);
+
+    try {
+        while (true) {
+            console.log("Elimino elemento en index 3: " + remove(list, 3));
+            console.log("Elimino elemento 55 si lo encuentra: " + removeElement(list, 55));
+            console.log("The list: " + toString(list));
+            console.log("Reemplazo elemento en index 1 por 66: " + set(list, 66, 1));
+        }
+    } catch (err) {
+        console.log(err); //When the list is empty, an exception will be catched.
+    }
+
+    console.log("The list: " + toString(list));
+}
+window.onload = testlist;
