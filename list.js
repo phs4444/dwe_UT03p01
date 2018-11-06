@@ -26,7 +26,7 @@ function removeByIndex(pos) {
     var list = document.getElementById("list");
     error.innerHTML = "";
     try {
-        (pos == "") ? remove(NUMBERS_LIST, lastElement(NUMBER_LIST))
+        (pos == "") ? remove(NUMBERS_LIST, lastElement(NUMBERS_LIST))
             : remove(NUMBERS_LIST, pos);
         list.innerHTML = toString(NUMBERS_LIST);
     } catch (err) {
@@ -84,6 +84,7 @@ function addAt(list, elem, index) {
         for (let j = size(list); j > index; j--) {
             list[j] = list[j - 1];
         }
+        list[index] = elem;
     } else {
         throw "The list is Full. You can't put the element in it";
     }
