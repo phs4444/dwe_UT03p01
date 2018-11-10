@@ -10,11 +10,11 @@ function cleanData() {
 
 function addNumber(num, pos) {
     var error = document.getElementById("error");
-    var olist = document.getElementById("olist");
+    var oList = document.getElementById("oList");
     error.innerHTML = "";
     try {
         add(NUMBERS_OLIST, num);
-        olist.innerHTML = toString(NUMBERS_OLIST);
+        oList.innerHTML = toString(NUMBERS_OLIST);
     } catch (err) {
         error.innerHTML = err;
     }
@@ -22,101 +22,95 @@ function addNumber(num, pos) {
 
 function removeByIndex(pos) {
     var error = document.getElementById("error");
-    var olist = document.getElementById("olist");
+    var oList = document.getElementById("oList");
     error.innerHTML = "";
     try {
         (pos == "") ? remove(NUMBERS_OLIST, lastElement(NUMBERS_OLIST))
-                    : remove(NUMBERS_OLIST, pos);
-        olist.innerHTML = toString(NUMBERS_OLIST);
+            : remove(NUMBERS_OLIST, pos);
+        oList.innerHTML = toString(NUMBERS_OLIST);
     } catch (err) {
         error.innerHTML = err;
     }
 }
 
-/* Olist Functions */
+/* OList Functions */
 
 var MAX_ELEM_OLIST = 5;
 function create() {
-    var olist = [];
+    var oList = [];
     for (var i = 0; i < MAX_ELEM_OLIST; i++) {
-        olist[i] = Number.NaN;
+        oList[i] = Number.NaN;
     }
-    return olist;
+    return oList;
 }
 
-function isEmpty(olist) {
+function isEmpty(oList) {
     var isEmpty = false;
-    if (isNaN(olist[0])) isEmpty = true;
+    if (isNaN(oList[0])) isEmpty = true;
     return isEmpty;
 }
 
-function isFull(olist) {
+function isFull(oList) {
     var isFull = false;
-    if (!isNaN(olist[MAX_ELEM_OLIST - 1])) isFull = true;
+    if (!isNaN(oList[MAX_ELEM_OLIST - 1])) isFull = true;
     return isFull;
 }
 
-function size(olist) {
+function size(oList) {
     var length = 0;
-    while (length < MAX_ELEM_OLIST && !isNaN(olist[length])) length++;
+    while (length < MAX_ELEM_OLIST && !isNaN(oList[length])) length++;
     return length;
 }
 
-function add(olist, elem) {
+function add(oList, elem) {
     elem = parseInt(elem);
     if (isNaN(elem)) throw "The element is not a number";
-    if (!isFull(olist)) {
-        olist[size(olist)] = elem;
-    } else {
-        throw "The olist is Full. You can't put the element in it";
-    }
-    return size(olist);
-}
-
-function addAt(olist, elem, index) {
-    elem = parseInt(elem);
-    index = parseInt(index);
-    if (isNaN(elem)) throw "The element is not a number";
-    if (isNaN(index)) throw "The index is not a number";
-    if (!isFull(olist)) {
-        if ((index >= size(olist) || (index < 0))) throw "Index out of bounds";
-        for (let j = size(olist); j > index; j--) {
-            olist[j] = olist[j - 1];
+    if (!isFull(oList)) {
+        var iLastElem = size(oList);
+        var foundGap = false;
+        var i = 0;
+        while (iLastElem > 0 && !foundGap) {
+            if (oList[iLastElem - 1] <= elem) {
+                foundGap = True;
+            } else {
+                oList[iLastElem] = oList[iLastElem - 1];
+                iLastElem--;
+            }
         }
-        olist[index] = elem;
+        oList[iLastElem] = elem;
     } else {
-        throw "The olist is Full. You can't put the element in it";
+        throw "The oList is Full. You can't put the element in it";
     }
-    return size(olist);
+    return size(oList);
 }
 
-function get(olist, index) {
+function get(oList, index) {
     index = parseInt(index);
-    if ((index >= size(olist) || (index < 0))) throw "Index out of bounds";
-    return olist[index];
+    if ((index >= size(oList) || (index < 0))) throw "Index out of bounds";
+    return oList[index];
 }
 
-function toString(olist) {
+function toString(oList) {
     var str = "";
-    if (!isEmpty(olist)) {
-        var length = size(olist);
+    if (!isEmpty(oList)) {
+        var length = size(oList);
         for (var i = 0; i < length - 1; i++) {
-            str = str + olist[i] + " - ";
+            str = str + oList[i] + " - ";
         }
-        str = str + olist[i];
+        str = str + oList[i];
     }
     return str;
 }
 
-function indexOf(olist, elem) {
+function indexOf(oList, elem) {
     var position = -1;
     elem = parseInt(elem);
     if (!isNaN(elem)) {
-        if (!isEmpty(olist)) {
-            var length = size(olist);
+        if (!isEmpty(oList)) {
+            var length = size(oList);
             var i = 0;
             while (i < length && position === -1) {
-                if (olist[i] === elem) {
+                if (oList[i] === elem) {
                     position = i;
                 }
                 i++;
@@ -128,91 +122,77 @@ function indexOf(olist, elem) {
     return position;
 }
 
-function lastIndexOf(olist, elem) {
-    var position = -1;
-    elem = parseInt(elem);
-    if (!isNaN(elem)) {
-        if (!isEmpty(olist)) {
-            var i = size(olist) - 1;
-            while (i >= 0 && position === -1) {
-                if (olist[i] === elem) {
-                    position = i;
-                }
-                i--;
-            }
-        }
-    } else {
-        throw "The element is not a number";
-    }
-    return position;
-}
-
-function capacity(olist) {
+function capacity(oList) {
     return MAX_ELEM_OLIST;
 }
 
-function clear(olist) {
+function clear(oList) {
     var elem = Number.NaN;
-    if (!isEmpty(olist)) {
-        var length = size(olist);
+    if (!isEmpty(oList)) {
+        var length = size(oList);
         for (var i = 0; i < length; i++) {
-            olist[i] = Number.NaN;
+            oList[i] = Number.NaN;
         }
     }
 }
 
-function firstElement(olist) {
+function firstElement(oList) {
     var first;
-    if (!isEmpty(olist)) {
-        first = olist[0];
+    if (!isEmpty(oList)) {
+        first = oList[0];
     } else {
-        throw "The olist is empty.";
+        throw "The oList is empty.";
     }
     return first;
 }
 
-function lastElement(olist) {
+function lastElement(oList) {
     var last;
-    if (!isEmpty(olist)) {
-        last = olist[size(olist) - 1];
+    if (!isEmpty(oList)) {
+        last = oList[size(oList) - 1];
     } else {
-        throw "The olist is empty.";
+        throw "The oList is empty.";
     }
     return last;
 }
 
-function remove(olist, index) {
+function remove(oList, index) {
     var elem = 0;
     var index = parseInt(index);
-    if ((index >= size(olist) || (index < 0))) throw "Index out of bounds";
-    if (!isEmpty(olist)) {
-        var lastIndex = size(olist) - 1;
-        elem = olist[index];
+    if ((index >= size(oList) || (index < 0))) throw "Index out of bounds";
+    if (!isEmpty(oList)) {
+        var lastIndex = size(oList) - 1;
+        elem = oList[index];
         for (var i = index; i < lastIndex; i++) {
-            olist[i] = olist[i + 1];
+            oList[i] = oList[i + 1];
         }
-        olist[i] = Number.NaN;
+        oList[i] = Number.NaN;
     } else {
-        throw "The olist is empty. You can't remove any element";
+        throw "The oList is empty. You can't remove any element";
     }
     return elem;
 }
 
-function removeElement(olist, elem) {
+function removeElement(oList, elem) {
     var elem = parseInt(elem);
     var isDeleted = false;
     if (!isNaN(elem)) {
-        if (!isEmpty(olist)) {
-            var lastIndex = size(olist) - 1;
-            for (let i = 0, j = 0; i < lastIndex; i++) {
-                if (olist[i + j] === elem) {
+        if (!isEmpty(oList)) {
+            var lastIndex = size(oList) - 1;
+            var i = 0, j = 0;
+            while ((i < lastIndex) && !isDeleted) {
+                if (oList[i + j] === elem) {
                     isDeleted = true;
-                    remove(olist, i + j);
+                    for (var k = i + j; k < lastIndex; k++) {
+                        list[k] = list[k + 1];
+                    }
+                    oList[k] = Number.NaN;
                     j--;
                 }
+                i++;
             }
         } else {
-            throw "The olist is empty. You can't remove any element";
+            throw "The oList is empty. You can't remove any element";
         }
     } else {
         throw "The element is not a number";
@@ -220,59 +200,44 @@ function removeElement(olist, elem) {
     return isDeleted;
 }
 
-function set(olist, elem, index) {
-    var elem = parseInt(elem);
-    var index = parseInt(index);
-    if ((index >= size(olist) || (index < 0))) throw "Index out of bounds";
-    if (!isNaN(elem)) {
-        var elemAnt = olist[index];
-        olist[index] = elem;
-    } else {
-        throw "The element os not a number";
-    }
-    return elemAnt;
-}
-
-function testolist() {
-    //var olist = create (); 	
-    var olist = [];
-    console.log("Capacidad: " + capacity(olist));
-    console.log("Es vacía: " + isEmpty(olist));
-    console.log("Longitud: " + size(olist));
+function testoList() {
+    //var oList = create (); 	
+    var oList = [];
+    console.log("Capacidad: " + capacity(oList));
+    console.log("Es vacía: " + isEmpty(oList));
+    console.log("Longitud: " + size(oList));
 
     try {
 
 
         for (var i = 0; i < MAX_ELEM_OLIST - 1; i++) {
-            console.log("Nº de elementos: " + add(olist, i * 10));
+            console.log("Nº de elementos: " + add(oList, Math.random(0, 100)));
         }
-        console.log("The full olist: " + toString(olist));
-        console.log("Añado en index 2 valor 55: " + addAt(olist, 55, 2));
-        add(olist, i); //It will generate an exception.
+        console.log("The full oList: " + toString(oList));
+        console.log("Añado el número 55, deberá ordenarse como el resto de elementos: " + add(oList, 55));
+        add(oList, i); //It will generate an exception.
     } catch (err) {
         console.log(err);
     }
 
-    console.log("Busco el valor 55 desde el principio: " + indexOf(olist, 55));
-    console.log("Busco el valor 55 desde el final: " + lastIndexOf(olist, 55));
-    console.log("The full olist: " + toString(olist));
-    console.log("The first element olist: " + firstElement(olist));
-    console.log("The last element olist: " + lastElement(olist));
-    console.log("The element at index 3: " + get(olist, 3));
+    console.log("Busco el valor 55 desde el principio: " + indexOf(oList, 55));
+    console.log("The full oList: " + toString(oList));
+    console.log("The first element oList: " + firstElement(oList));
+    console.log("The last element oList: " + lastElement(oList));
+    console.log("The element at index 3: " + get(oList, 3));
 
-    //clear(olist);
+    //clear(oList);
 
     try {
         while (true) {
-            console.log("Elimino elemento en index 3: " + remove(olist, 3));
-            console.log("Elimino elemento 55 si lo encuentra: " + removeElement(olist, 55));
-            console.log("The olist: " + toString(olist));
-            console.log("Reemplazo elemento en index 1 por 66: " + set(olist, 66, 1));
+            console.log("Elimino elemento en index 3: " + remove(oList, 3));
+            console.log("Elimino elemento 55 si lo encuentra: " + removeElement(oList, 55));
+            console.log("The oList: " + toString(oList));
         }
     } catch (err) {
-        console.log(err); //When the olist is empty, an exception will be catched.
+        console.log(err); //When the oList is empty, an exception will be catched.
     }
 
-    console.log("The olist: " + toString(olist));
+    console.log("The oList: " + toString(oList));
 }
-window.onload = testolist;
+window.onload = testoList;

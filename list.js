@@ -208,7 +208,10 @@ function removeElement(list, elem) {
             for (let i = 0, j = 0; i < lastIndex; i++) {
                 if (list[i + j] === elem) {
                     isDeleted = true;
-                    remove(list, i + j);
+                    for (var k = i + j; k < lastIndex; k++) {
+                        list[k] = list[k + 1];
+                    }
+                    list[k] = Number.NaN;
                     j--;
                 }
             }
