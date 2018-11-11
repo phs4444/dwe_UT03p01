@@ -38,43 +38,28 @@ function removeByIndex(pos) {
 var MAX_ELEM_OLIST = 5;
 function create() {
     var oList = [];
-    for (var i = 0; i < MAX_ELEM_OLIST; i++) {
-        oList[i] = Number.NaN;
-    }
     return oList;
 }
 
 function isEmpty(oList) {
-    return isNaN(oList[0]);
+    return (oList.length === 0);
 }
 
 function isFull(oList) {
-    return !isNaN(oList[MAX_ELEM_OLIST - 1]);
+    return (oList.length === MAX_ELEM_OLIST);
 }
 
 function size(oList) {
-    var length = 0;
-    while (length < MAX_ELEM_OLIST && !isNaN(oList[length])) length++;
-    return length;
+    return oList.length;
 }
 
 function add(oList, elem) {
     elem = parseInt(elem);
     if (isNaN(elem)) throw "The element is not a number";
     if (!isFull(oList)) {
-        var iLastElem = size(oList);
-        var foundGap = false;
-        var i = 0;
-        while (iLastElem > 0 && !foundGap) {
-            if (oList[iLastElem - 1] <= elem) {
-                foundGap = true;
-            } else {
-                oList[iLastElem] = oList[iLastElem - 1];
-                iLastElem--;
-            }
-        }
-        oList[iLastElem] = elem;
-    } else throw "The oList is Full. You can't put the element in it";
+        oList.push(elem);
+        oList.sort(function (a, b) { return a - b });
+    } else throw "The list is Full. You can't put the element in it";
     return size(oList);
 }
 
@@ -97,21 +82,9 @@ function toString(oList) {
 }
 
 function indexOf(oList, elem) {
-    var position = -1;
     elem = parseInt(elem);
-    if (!isNaN(elem)) {
-        if (!isEmpty(oList)) {
-            var length = size(oList);
-            var i = 0;
-            while (i < length && position === -1) {
-                if (oList[i] === elem) {
-                    position = i;
-                }
-                i++;
-            }
-        }
-    } else throw "The element is not a number";
-    return position;
+    if (isNaN(elem)) throw "The element is not a number";
+    return oList.indexOf(elem);
 }
 
 function capacity(oList) {
@@ -119,12 +92,8 @@ function capacity(oList) {
 }
 
 function clear(oList) {
-    var elem = Number.NaN;
     if (!isEmpty(oList)) {
-        var length = size(oList);
-        for (var i = 0; i < length; i++) {
-            oList[i] = Number.NaN;
-        }
+        oList.splice(0, oList.length);
     }
 }
 
@@ -145,41 +114,23 @@ function lastElement(oList) {
 }
 
 function remove(oList, index) {
-    var elem = 0;
     var index = parseInt(index);
     if ((index >= size(oList) || (index < 0))) throw "Index out of bounds";
-    if (!isEmpty(oList)) {
-        var lastIndex = size(oList) - 1;
-        elem = oList[index];
-        for (var i = index; i < lastIndex; i++) {
-            oList[i] = oList[i + 1];
-        }
-        oList[i] = Number.NaN;
-    } else throw "The oList is empty. You can't remove any element";
-    return elem;
+    if (isEmpty(oList)) throw "The list is empty. You can't remove any element";
+    return oList.splice(index, 1);
 }
 
 function removeElement(oList, elem) {
     var elem = parseInt(elem);
-    var isDeleted = false;
-    if (!isNaN(elem)) {
-        if (!isEmpty(oList)) {
-            var lastIndex = size(oList) - 1;
-            var i = 0, j = 0;
-            while ((i < lastIndex) && !isDeleted) {
-                if (oList[i + j] === elem) {
-                    isDeleted = true;
-                    for (var k = i + j; k < lastIndex; k++) {
-                        oList[k] = oList[k + 1];
-                    }
-                    oList[k] = Number.NaN;
-                    j--;
-                }
-                i++;
-            }
-        } else throw "The oList is empty. You can't remove any element";
-    } else throw "The element is not a number";
-    return isDeleted;
+    if (isNaN(elem)) throw "The element is not a number";
+    if (isEmpty(oList)) throw "The list is empty. You can't remove any element";
+    var size = oList.length;
+    var i = size - 1;
+    while (oList[i] >= elem) {
+        if (oList[i] === elem) oList.splice(i, 1);
+        i--;
+    }
+    return size != oList.length;
 }
 
 function testoList() {

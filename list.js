@@ -46,15 +46,11 @@ function create() {
 }
 
 function isEmpty(list) {
-    var isEmpty = false;
-    if (isNaN(list[0])) isEmpty = true;
-    return isEmpty;
+    return isNaN(list[0]);
 }
 
 function isFull(list) {
-    var isFull = false;
-    if (!isNaN(list[MAX_ELEM_LIST - 1])) isFull = true;
-    return isFull;
+    return !isNaN(list[MAX_ELEM_LIST - 1]);
 }
 
 function size(list) {
@@ -68,9 +64,7 @@ function add(list, elem) {
     if (isNaN(elem)) throw "The element is not a number";
     if (!isFull(list)) {
         list[size(list)] = elem;
-    } else {
-        throw "The list is Full. You can't put the element in it";
-    }
+    } else throw "The list is Full. You can't put the element in it";
     return size(list);
 }
 
@@ -85,9 +79,7 @@ function addAt(list, elem, index) {
             list[j] = list[j - 1];
         }
         list[index] = elem;
-    } else {
-        throw "The list is Full. You can't put the element in it";
-    }
+    } else throw "The list is Full. You can't put the element in it";
     return size(list);
 }
 
@@ -123,9 +115,7 @@ function indexOf(list, elem) {
                 i++;
             }
         }
-    } else {
-        throw "The element is not a number";
-    }
+    } else throw "The element is not a number";
     return position;
 }
 
@@ -142,9 +132,7 @@ function lastIndexOf(list, elem) {
                 i--;
             }
         }
-    } else {
-        throw "The element is not a number";
-    }
+    } else throw "The element is not a number";
     return position;
 }
 
@@ -166,9 +154,7 @@ function firstElement(list) {
     var first;
     if (!isEmpty(list)) {
         first = list[0];
-    } else {
-        throw "The list is empty.";
-    }
+    } else throw "The list is empty.";
     return first;
 }
 
@@ -176,9 +162,7 @@ function lastElement(list) {
     var last;
     if (!isEmpty(list)) {
         last = list[size(list) - 1];
-    } else {
-        throw "The list is empty.";
-    }
+    } else throw "The list is empty.";
     return last;
 }
 
@@ -193,9 +177,7 @@ function remove(list, index) {
             list[i] = list[i + 1];
         }
         list[i] = Number.NaN;
-    } else {
-        throw "The list is empty. You can't remove any element";
-    }
+    } else throw "The list is empty. You can't remove any element";
     return elem;
 }
 
@@ -215,12 +197,8 @@ function removeElement(list, elem) {
                     j--;
                 }
             }
-        } else {
-            throw "The list is empty. You can't remove any element";
-        }
-    } else {
-        throw "The element is not a number";
-    }
+        } else throw "The list is empty. You can't remove any element";
+    } else throw "The element is not a number";
     return isDeleted;
 }
 
@@ -231,9 +209,7 @@ function set(list, elem, index) {
     if (!isNaN(elem)) {
         var elemAnt = list[index];
         list[index] = elem;
-    } else {
-        throw "The element os not a number";
-    }
+    } else throw "The element os not a number";
     return elemAnt;
 }
 
@@ -245,8 +221,6 @@ function testlist() {
     console.log("Longitud: " + size(list));
 
     try {
-
-
         for (var i = 0; i < MAX_ELEM_LIST - 1; i++) {
             console.log("Nº de elementos: " + add(list, i * 10));
         }
